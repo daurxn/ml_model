@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field, conlist
+from pydantic import BaseModel, Field
 
 from .model import ModelService
 
@@ -10,8 +10,9 @@ model_service = ModelService()
 
 
 class PredictRequest(BaseModel):
-    features: conlist(float, min_items=4, max_items=4) = Field(
-        ..., description="sepal_length, sepal_width, petal_length, petal_width"
+    features: list[float] = Field(
+        ..., min_length=4, max_length=4,
+        description="sepal_length, sepal_width, petal_length, petal_width"
     )
 
 
